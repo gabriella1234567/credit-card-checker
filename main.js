@@ -25,13 +25,13 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 // A function that takes in an array of numbers and returns true if the numbers are valid
 const getCheckDigit = arr => {
 
-    // Reverse arr to iterate "backwards"
+    // Reverse array to iterate "backwards" with regular methods
     arr = arr.toReversed();
 
     // Declare empty variable to store sum
     let sum = 0;
 
-    /* For loop to iterate through arr. By declaring i = 1, the loop will start at index 1, skipping the first digit. It continues throughout the entire length of the array (i < arr.length) and skips every other digit by incrementing i by 2.
+    /* For loop to iterate through the given array. The Luhn algorithm says to skip the lasy digit. By declaring i = 1, the loop will start at index 1, which is the "last" digit in reverse order. It continues throughout the entire length of the array (i < arr.length) and skips every other digit by incrementing i by 2.
     */
     for (let i = 1; i < arr.length; i += 2) {
         // Doubles the digit at index [i]
@@ -81,10 +81,11 @@ const idInvalidCardCompanies = arr => {
     // Returns the array of invalid companies
     return invalidCompanies;
 }
+// Extra challenge functions below
 
-// Simple function that takes a string (card) and returns the string as an array of numbers
+// Function that takes a string (card) and returns the string as an array of characters
 const cardNumberToString = card => {
-    return card.split('')
+    return card.split('');
 }
 
 const generateCardNumber = () => {
@@ -94,18 +95,17 @@ const generateCardNumber = () => {
     let sum = 0;
     // Declare empty variable for the check digit
     let checkDigit = 0;
-    // For loop that iterates through the length of the array, and pushes a random number between 0 and 9 to the array
+
+    // For loop that pushes a random number between 0 and 9 to the array while the length of the array is less than 16.
     for (let i = 0; card.length < 16; i++) {
         card.push(Math.floor(Math.random() * 10));
     }
-    console.log(card)
+    
     // Drops the last digit
     card = card.slice(0, card.length - 1);
-    console.log(card)
 
     // Reverses the order of cards
     card = card.reverse()
-    console.log(card)
 
     // Loops through the card array, doubling every other number. Same logic as getCheckDigit()
     for (let i = 1; i < card.length; i += 2) {
@@ -116,21 +116,16 @@ const generateCardNumber = () => {
             card[i] -= 9;
         } 
     }
-    console.log(card)
+
     // Sums all the numbers together
     sum = card.reduce((a, b) => a + b, 0);
-    console.log(sum)
 
     // Assigns checkDigit the sum modulo 10 which is the valid check digit
     checkDigit = sum % 10;
-    console.log(checkDigit)
 
     // Returns the card number with the check digit
     card = card.join('') + checkDigit;
-    console.log(card)
 
     // Returns the card number as a string
     return card
 }
-
-generateCardNumber();
