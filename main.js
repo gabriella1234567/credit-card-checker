@@ -87,9 +87,50 @@ const cardNumberToString = card => {
     return card.split('')
 }
 
+const generateCardNumber = () => {
+    // Declare empty array to store generated card number
+    let card = [];
+    // Declare empty variable for the sum of the numbers
+    let sum = 0;
+    // Declare empty variable for the check digit
+    let checkDigit = 0;
+    // For loop that iterates through the length of the array, and pushes a random number between 0 and 9 to the array
+    for (let i = 0; card.length < 16; i++) {
+        card.push(Math.floor(Math.random() * 10));
+    }
+    console.log(card)
+    // Drops the last digit
+    card = card.slice(0, card.length - 1);
+    console.log(card)
 
-// Tests
-console.log(getCheckDigit(valid1)); // test valid card
-console.log(getCheckDigit(invalid1)); // test invalid card
-console.log(findInvalidCards(batch)); // test finding invalid cards
-console.log(idInvalidCardCompanies(findInvalidCards(batch))); // test getting companies
+    // Reverses the order of cards
+    card = card.reverse()
+    console.log(card)
+
+    // Loops through the card array, doubling every other number. Same logic as getCheckDigit()
+    for (let i = 1; i < card.length; i += 2) {
+        // Doubles the digit at index [i]
+        card[i] *= 2;
+        // If arr at index [i] is greater than 9, subtract 9
+        if (card[i] > 9) {
+            card[i] -= 9;
+        } 
+    }
+    console.log(card)
+    // Sums all the numbers together
+    sum = card.reduce((a, b) => a + b, 0);
+    console.log(sum)
+
+    // Assigns checkDigit the sum modulo 10 which is the valid check digit
+    checkDigit = sum % 10;
+    console.log(checkDigit)
+
+    // Returns the card number with the check digit
+    card = card.join('') + checkDigit;
+    console.log(card)
+
+    // Returns the card number as a string
+    return card
+}
+
+generateCardNumber();
