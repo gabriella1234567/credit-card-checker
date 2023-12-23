@@ -85,11 +85,14 @@ const idInvalidCardCompanies = (arr) => {
   // Checks if any cards in the array start with the associated digit by checking card[0]. If there's a match, it pushes the company name to the invalidCompanies array
   if (arr.some((card) => card[0] === 3)) {
     invalidCompanies.push("American Express");
-  } if (arr.some((card) => card[0] === 4)) {
+  }
+  if (arr.some((card) => card[0] === 4)) {
     invalidCompanies.push("Visa");
-  } if (arr.some((card) => card[0] === 5)) {
+  }
+  if (arr.some((card) => card[0] === 5)) {
     invalidCompanies.push("Mastercard");
-  } if (arr.some((card) => card[0] === 6)) {
+  }
+  if (arr.some((card) => card[0] === 6)) {
     invalidCompanies.push("Discover");
   } else {
     console.log("Company not found");
@@ -140,10 +143,9 @@ const generateCardNumber = () => {
   // Assigns checkDigit the sum modulo 10 which is the valid check digit
   checkDigit = sum % 10;
 
-  // Returns the card number with the check digit
-  card = card.join("") + checkDigit;
-
-  // Returns the card number as a string
+  // Reverses the order of the cards again and then adds the check digit to the end
+  card = card.reverse().concat(checkDigit);
+  card = card.concat(checkDigit);
   return card;
 };
 
@@ -155,3 +157,4 @@ console.log(validateCred(invalid1)); // Should print false
 console.log(validateCred(mystery1)); // Should print false
 console.log(validateCred(mystery2)); // Should print true
 console.log(validateCred(valid1)); // Should print true
+console.log(generateCardNumber());
